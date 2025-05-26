@@ -5,9 +5,9 @@ export default {
     // Executa ao iniciar
     await syncRepositories(strapi);
 
-    // Executa a cada 24 horas
+    // Executa a cada 1 hora
     setInterval(() => {
       syncRepositories(strapi);
-    }, 1000 * 60 * 60 * 24);
+    }, 1000 * 60 * 60);
   },
 };
