@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dependencies",
+  "info": {
+    "singularName": "dependency",
+    "pluralName": "dependencies",
+    "displayName": "Dependency",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "current_version": {
+      "type": "string"
+    },
+    "latest_version": {
+      "type": "string"
+    },
+    "outdated": {
+      "type": "boolean"
+    },
+    "repository": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::repository.repository",
+      "inversedBy": "dependencies"
+    }
+  }
+}

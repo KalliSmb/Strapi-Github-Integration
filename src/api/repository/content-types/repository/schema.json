@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "repositories",
+  "info": {
+    "singularName": "repository",
+    "pluralName": "repositories",
+    "displayName": "Repository",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "html_url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "language": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dependency.dependency",
+      "mappedBy": "repository"
+    }
+  }
+}
