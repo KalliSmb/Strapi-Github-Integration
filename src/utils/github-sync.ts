@@ -33,7 +33,7 @@ const headers = {
 };
 
 export const syncRepositories = async (strapi: any) => {
-  const response = await fetch(`${BASE_URL}/users/${GITHUB_USER_ORG}/repos?per_page=100`, { headers });
+  const response = await fetch(`${BASE_URL}/orgs/${GITHUB_USER_ORG}/repos?per_page=100&type=all`, { headers });
   const repos = (await response.json()) as Repository[];
   if (!Array.isArray(repos)) return;
 
