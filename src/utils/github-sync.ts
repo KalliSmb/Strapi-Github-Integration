@@ -32,12 +32,28 @@ const headers = {
   Accept: 'application/vnd.github+json',
 };
 
-export const syncRepositories = async (strapi: any) => {
+export const syncRepositories = async (strapi: any, force = false) => {
   const response = await fetch(`${BASE_URL}/orgs/${GITHUB_USER_ORG}/repos?per_page=100&type=all`, { headers });
   const repos = (await response.json()) as Repository[];
   if (!Array.isArray(repos)) return;
 
+  const oneHourAgo = new Date(Date.now() - 1000 * 60 * 60).toISOString();
+
   for (const repo of repos) {
+    if (!force) {
+      // Verifica se houve commits na última hora
+      const commitsRes = await fetch(
+        `${BASE_URL}/repos/${repo.owner.login}/${repo.name}/commits?since=${oneHourAgo}`,
+        { headers }
+      );
+      if (!commitsRes.ok) continue;
+      const commits = await commitsRes.json();
+      if (!Array.isArray(commits) || commits.length === 0) {
+        // Não houve commits na última hora, pula para o próximo repositório
+        continue;
+      }
+    }
+
     // Verifica se o repositório já existe, se não cria
     let repositoryEntry;
     try {
