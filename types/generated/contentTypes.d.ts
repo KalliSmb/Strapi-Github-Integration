@@ -418,7 +418,7 @@ export interface ApiRepositoryRepository extends Struct.CollectionTypeSchema {
     singularName: 'repository';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
