@@ -32,6 +32,9 @@ const headers = {
   Accept: 'application/vnd.github+json',
 };
 
+// Remove os prefixos que podem existir nas versões
+const cleanVersion = (v: string) => v.replace(/^[\^~><= ]+/, '');
+
 export const syncRepositories = async (strapi: any, force = false) => {
   const response = await fetch(`${BASE_URL}/orgs/${GITHUB_USER_ORG}/repos?per_page=100&type=all`, { headers });
   const repos = (await response.json()) as Repository[];
@@ -130,7 +133,7 @@ export const syncRepositories = async (strapi: any, force = false) => {
             data: {
               current_version: version,
               latest_version: latest,
-              outdated: latest !== version,
+              outdated: cleanVersion(latest) !== cleanVersion(version),
               repository: repositoryEntry.id,
             },
           });
@@ -141,7 +144,7 @@ export const syncRepositories = async (strapi: any, force = false) => {
               name: dep,
               current_version: version,
               latest_version: latest,
-              outdated: latest !== version,
+              outdated: cleanVersion(latest) !== cleanVersion(version),
               repository: repositoryEntry.id,
             },
           });
